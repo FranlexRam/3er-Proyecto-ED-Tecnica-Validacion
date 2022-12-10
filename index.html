@@ -12,20 +12,21 @@
 <body>
     <form id="form">
         <h1 id="form-title">Validacion</h1>
+        <!-- user name -->
         <div class="input-div">
             <input type="text" id="username" placeholder="Nombre de usuario" class="form-input">
             <p class="information">
                 Debe incluir 1 numero y 1 letra. Maximo  16 caracteres.
             </p>
         </div>
-
+        <!-- email -->
         <div class="input-div">
             <input type="email" id="email" placeholder="Correo electronico" class="form-input">
             <p class="information">
                 Debe ser el siguiente formato: ejemplo@correo.com
             </p>
         </div>
-
+        <!-- select country -->
         <div class="input-div">
             <select id="countries" class="form-input">
                 <option value="" Selected disabled>Selecciona un pais</option>
@@ -248,7 +249,7 @@
                 Debe seleccionar un pais.
             </p>
         </div>
-
+        <!-- Phone call -->
         <div class="input-div">
             <div id="phone-container">
                 <span id="phone-code">+##</span>
@@ -258,21 +259,22 @@
                 Solo acpeta numeros.
             </p>
         </div>
-
+        <!-- password -->
         <div class="input-div">
             <input type="password" id="password" placeholder="Contrasena" class="form-input">
             <p class="information">
                 Debe incluir 1 numero y 1 letra. Maximo 24 caracteres.
             </p>
         </div>
+        <!-- confirm-password -->
         <div class="input-div">
             <input type="password" id="confirm-password" placeholder="Confirmar contrasena" class="form-input">
             <p class="information">
                 Debe coincidir con la contrasena.
             </p>
         </div>
-
-        <button id="form-btn">Registrar</button>
+        <!-- button -->
+        <button disabled id="form-btn">Registrar</button>
 
 
     </form>
