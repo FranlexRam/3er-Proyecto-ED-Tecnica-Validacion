@@ -78,6 +78,12 @@ body {
     background-color: #22c55e;
     color: #f8fafc;
     border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+#form-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .correct {
