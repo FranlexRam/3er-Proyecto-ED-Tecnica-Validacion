@@ -95,5 +95,6 @@ form.addEventListener('submit', e => {
         phone: `${phoneCode.innerHTML} ${phoneInput.value}`,
         password: passwordInput.value
     }
+    form.reset();
     console.log(user);
 });
