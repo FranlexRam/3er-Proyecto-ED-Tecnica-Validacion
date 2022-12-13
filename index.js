@@ -45,6 +45,30 @@ const validation = (validation, element) => {
     }
 }
 
+const reset = () => {
+    //set false to all validations
+    usernameValidation = false;
+    emailValidation = false;
+    phoneValidation = false;
+    passwordValidation = false;
+    confirmPasswordValidation = false;
+
+    //set input to empty
+    usernameInput.value = '';
+    emailInput.value = '';
+    phoneInput.value = '';
+    passwordInput.value = '';
+    confirmPasswordInput.value = '';
+
+    //reset validations
+    validation(usernameValidation,usernameInput);
+    validation(emailValidation,emailInput);
+    validation(phoneValidation,phoneInput);
+    validation(passwordValidation,passwordInput);
+    validation(confirmPasswordValidation,confirmPasswordInput);
+
+}
+
 [...countries].forEach(option => {
     option.innerHTML = option.innerHTML.split('(')[0];
 });
@@ -103,6 +127,7 @@ form.addEventListener('submit', e => {
         password: passwordInput.value
     }
     console.log(user);
+    reset();
     
 });
 
@@ -113,10 +138,20 @@ form.addEventListener('submit', e => {
 const getCountry = async () => {
     //fetch
     try {
-        const data = await fetch('https://api.geoapify.com/v1/ipinfo?apiKey=df01505355204127856562d8a543cb18', {method: 'GET'});
-        console.log(data);
+        const data = await (await fetch('https://api.geoapify.com/v1/ipinfo?apiKey=df01505355204127856562d8a543cb18', {method: 'GET'})).json();
+        //const response = await data.json();
+    
+        const isoCode = data.country.iso_code;
+        const country = [...countries.children].find(option => option.getAttribute('data-countryCode') === isoCode);
+        country.selected = true;
+        phoneCode.innerHTML = `+${country.value}`;
+        countries.classList.add('correct');
+        phoneCode.classList.add('correct');
+        countriesValidation = country.value !== '' ? true:false;
+        validation(countriesValidation, countries);
+
     } catch (error) {
-        console.log(error);
+        alert('No tienes internet');
     }
 }
 
