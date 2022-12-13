@@ -26,14 +26,19 @@ let countriesValidation = false;
 
 //Function
 
-const validation = (e, validation, element) => {
-    const information = e.target.parentElement.children[1];
+const validation = (validation, element) => {
+    const information = element.parentElement.children[1];
     formBtn.disabled = !usernameValidation || !emailValidation || !phoneValidation || !passwordValidation || !confirmPasswordValidation || !countriesValidation ? true : false;
-    if (validation) {
+    
+    if(element.value === ''){
+        element.classList.remove('incorrect');
+        element.classList.remove('correct');
+        information.classList.remove('show-information');
+    } else if (validation) {
         element.classList.add('correct');
         element.classList.remove('incorrect');
         information.classList.remove('show-information');
-    } else {
+    } else if (!validation){
         element.classList.add('incorrect');
         element.classList.remove('correct');
         information.classList.add('show-information');
@@ -46,12 +51,12 @@ const validation = (e, validation, element) => {
 
 usernameInput.addEventListener('input', e => {
     usernameValidation = USERNAME_REGEX.test(e.target.value);
-    validation(e, usernameValidation, usernameInput);
+    validation(usernameValidation, usernameInput);
 });
 
 emailInput.addEventListener('input', e => {
     emailValidation = EMAIL_REGEX.test(e.target.value);
-    validation(e, emailValidation, emailInput);
+    validation(emailValidation, emailInput);
 });
 
 countries.addEventListener('input', e => {
@@ -60,7 +65,7 @@ countries.addEventListener('input', e => {
     countriesValidation = optionSelected.value === '' ? false : true;
     countries.classList.add('correct');
     phoneCode.classList.add('correct');
-    validation(e, null, null);
+    validation(countriesValidation, countries);
 });
 
 phoneInput.addEventListener('input', e => {
@@ -79,12 +84,14 @@ phoneInput.addEventListener('input', e => {
 
 passwordInput.addEventListener('input', e => {
     passwordValidation = PASSWORD_REGEX.test(e.target.value);
-    validation(e, passwordValidation, passwordInput);
+    confirmPasswordValidation = confirmPasswordInput.value === e.target.value;
+    validation(passwordValidation, passwordInput);
+    validation(confirmPasswordValidation, confirmPasswordInput);
 });
 
 confirmPasswordInput.addEventListener('input', e => {
     confirmPasswordValidation = passwordInput.value === e.target.value;
-    validation(e, confirmPasswordValidation, confirmPasswordInput);
+    validation(confirmPasswordValidation, confirmPasswordInput);
 });
 
 form.addEventListener('submit', e => {
@@ -95,6 +102,22 @@ form.addEventListener('submit', e => {
         phone: `${phoneCode.innerHTML} ${phoneInput.value}`,
         password: passwordInput.value
     }
-    form.reset();
     console.log(user);
+    
 });
+
+//https://api.geoapify.com/v1/ipinfo?apiKey=YOUR_API_KEY
+//API KEY: df01505355204127856562d8a543cb18
+
+
+const getCountry = async () => {
+    //fetch
+    try {
+        const data = await fetch('https://api.geoapify.com/v1/ipinfo?apiKey=df01505355204127856562d8a543cb18', {method: 'GET'});
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getCountry();
